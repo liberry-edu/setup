@@ -100,7 +100,7 @@ sudo service nginx restart
 
 
 #Setup Platform
-export LIBERRY_HOME=""$HOME/liberry"
+export LIBERRY_HOME="$HOME/liberry"
 mkdir -p $LIBERRY_HOME/pi/code
 mkdir -p $LIBERRY_HOME/pi/content
 mkdir -p $LIBERRY_HOME/pi/output
