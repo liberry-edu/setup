@@ -90,3 +90,31 @@ sudo service nginx restart
 
 #save the iptables rule so that when the pi is rebooted, rules are loaded automatically
 #sudo iptables-save
+
+
+#Setup Platform
+export LIBERRY_HOME="/home/pi/liberry"
+mkdir -p $LIBERRY_HOME/pi/code
+mkdir -p $LIBERRY_HOME/pi/content
+mkdir -p $LIBERRY_HOME/pi/output
+mkdir -p $LIBERRY_HOME/central/code
+mkdir -p $LIBERRY_HOME/central/content
+mkdir -p $LIBERRY_HOME/central/output
+
+git clone https://github.com/liberry-edu/platform.git $LIBERRY_HOME/pi/code
+git clone https://github.com/liberry-edu/platform.git $LIBERRY_HOME/central/code
+
+
+#install node.js
+sudo apt-get -y install node npm node-vows sqlite3
+sudo npm install -g pm2 sequelize-cli
+pm2 install pm2-logrotate
+
+cd $LIBERRY_HOME/pi/code
+npm install
+sequelize db:migrate
+
+export LIBERRY_ROOT=$LIBERRY_HOME/pi
+export MODE=pi
+
+pm2 start app.js
