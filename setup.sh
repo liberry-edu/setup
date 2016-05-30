@@ -1,11 +1,22 @@
 #!/bin/bash
 
 #TODO
-# 1. Take different configuration parameters
-#	client or main server
 # 2. Create shortcuts of the app and other important apps on the dashboard
 # 3. Test this on a virgin raspberry PI (I can't do it coz I don't have a memory card reader)
 # 4. Internet on Pi doesn't work properly after the changes in DNS and other things. #Verify
+
+INSTALLATION_TYPE="pi"
+while getopts ":s" opt; do
+  case $opt in
+    a)
+      echo "Setting up the Server" >&2
+      INSTALLATION_TYPE="central"
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      ;;
+  esac
+done
 
 #all the html content should be in the /var/www/html directory
 
@@ -101,16 +112,12 @@ sudo service nginx restart
 
 #Setup Platform
 export LIBERRY_HOME="$HOME/liberry"
-mkdir -p $LIBERRY_HOME/pi/code
-mkdir -p $LIBERRY_HOME/pi/content
-mkdir -p $LIBERRY_HOME/pi/output
-mkdir -p $LIBERRY_HOME/central/code
-mkdir -p $LIBERRY_HOME/central/content
-mkdir -p $LIBERRY_HOME/central/output
 
-git clone https://github.com/liberry-edu/platform.git $LIBERRY_HOME/pi/code
-git clone https://github.com/liberry-edu/platform.git $LIBERRY_HOME/central/code
+mkdir -p $LIBERRY_HOME/$INSTALLATION_TYPE/code
+mkdir -p $LIBERRY_HOME/$INSTALLATION_TYPE/content
+mkdir -p $LIBERRY_HOME/$INSTALLATION_TYPE/output
 
+git clone https://github.com/liberry-edu/platform.git $LIBERRY_HOME/$INSTALLATION_TYPE/code
 
 #install node.js
 sudo apt-get -y install node npm node-vows sqlite3
