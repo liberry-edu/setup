@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#TODO
+# 1. Take different configuration parameters
+#	client or main server
+# 2. Create shortcuts of the app and other important apps on the dashboard
+# 3. Test this on a virgin raspberry PI (I can't do it coz I don't have a memory card reader)
+# 4. Internet on Pi doesn't work properly after the changes in DNS and other things. #Verify
+
 #all the html content should be in the /var/www/html directory
 
 sudo apt-get -y install hostapd dnsmasq nginx
@@ -93,7 +100,7 @@ sudo service nginx restart
 
 
 #Setup Platform
-export LIBERRY_HOME="/home/pi/liberry"
+export LIBERRY_HOME=""$HOME/liberry"
 mkdir -p $LIBERRY_HOME/pi/code
 mkdir -p $LIBERRY_HOME/pi/content
 mkdir -p $LIBERRY_HOME/pi/output
